@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  position: relative;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #141414;
+  padding: 3.2rem 2.4rem;
+  border-bottom: 1px solid #97979770;
+  align-items: center;
+}
+
+.products-main {
+  padding: 0 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12rem;
+  align-items: center;
+}
+
+footer {
+  background-color: #101010;
+  padding: 5.2rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4.8rem;
+  margin-top: 10rem;
+}
+
+/* Tablet */
+
+@media only screen and (min-width: 48rem) {
+  header {
+    justify-content: unset;
+    gap: 4.2rem;
+  }
+
+  footer {
+    padding: 6rem 3.9rem 4.6rem;
+  }
+}
+
+/* Desktop */
+
+@media only screen and (min-width: 90rem) {
+  header {
+    justify-content: space-between;
+    gap: unset;
+  }
+
+  .products-main {
+    padding: 0 16.5rem;
+  }
+
+  footer {
+    padding: 6rem 16.5rem 4.6rem;
+  }
+}
