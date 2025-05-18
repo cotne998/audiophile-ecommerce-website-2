@@ -66,6 +66,17 @@ export default function CartComponent() {
 
 const SlideIn = keyframes`
   0% {
+    transform: translateY(-20%) scale(0.95) translateX(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1) translateX(-50%);
+    opacity: 1;
+  }
+`;
+
+const SlideInD = keyframes`
+  0% {
     transform: translateY(-20%) scale(0.95);
     opacity: 0;
   }
@@ -98,6 +109,8 @@ const CartContainer = styled.div`
     transform: unset;
     top: 12rem;
     padding: 3.1rem 3.3rem;
+    animation-name: ${SlideInD};
+    animation-duration: 0.2s;
   }
 
   @media only screen and (min-width: 90rem) {

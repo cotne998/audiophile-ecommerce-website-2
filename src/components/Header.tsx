@@ -8,12 +8,25 @@ import { MainContext } from "../pages/Layout";
 import Categories from "./Categories";
 import { SlideIn } from "./Categories";
 import CartComponent from "./CartComponent";
+import { useEffect } from "react";
 
 export default function Header() {
   const navigate = useNavigate();
 
   const { displayMenu, handleMenuClick, displayCart, handleCartClick } =
     useContext(MainContext);
+
+  useEffect(() => {
+    if (displayMenu || displayCart) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [displayMenu, displayCart]);
+
   return (
     <HeaderContainer>
       <header>
@@ -95,6 +108,8 @@ const CategoriesContainer = styled.div`
   z-index: 20;
   animation-name: ${SlideIn};
   animation-duration: 0.3s;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
 
   @media only screen and (min-width: 48rem) {
     padding: 5.6rem 4rem 6.7rem;
