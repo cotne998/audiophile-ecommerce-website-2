@@ -2,9 +2,12 @@ import { CartContext } from "../pages/Layout";
 import styled, { keyframes } from "styled-components";
 import { useContext } from "react";
 import { Increase, Decrease, Quantity } from "./ProductInfo";
+import { MainContext } from "../pages/Layout";
+import CartIcon from "/assets/shared/desktop/icon-cart.svg";
 
 export default function CartComponent() {
   const { state, dispatch } = useContext(CartContext);
+  const { cartIsEmpty } = useContext(MainContext);
 
   console.log(state);
   const totalQuantity = state.cartItems.reduce(
@@ -32,37 +35,87 @@ export default function CartComponent() {
   return (
     <>
       <CartContainer>
-        <CartHeader>
-          <QuantityDisplay>CART ({totalQuantity})</QuantityDisplay>
-          <RemoveButton onClick={handleRemove}>Remove all</RemoveButton>
-        </CartHeader>
-        <CartProducts>
-          {state.cartItems.map((item) => {
-            return (
-              <Product>
-                <ProductImg src={item.image} />
-                <NameAndPrice>
-                  <ProductName>{item.name}</ProductName>
-                  <Price>$ {item.price}</Price>
-                </NameAndPrice>
-                <ProductQuantity>
-                  <Decrease onClick={() => handleDec(item.name)}>-</Decrease>
-                  <Quantity>{item.quantity}</Quantity>
-                  <Increase onClick={() => handleInc(item.name)}>+</Increase>
-                </ProductQuantity>
-              </Product>
-            );
-          })}
-        </CartProducts>
-        <TotalDiv>
-          <TotalText>TOTAL</TotalText>
-          <PriceText>$ {totalPrice}</PriceText>
-        </TotalDiv>
-        <CheckoutButton>CHECKOUT</CheckoutButton>
+        {cartIsEmpty ? (
+          <>
+            <EmptyText>Your cart is empty</EmptyText>
+            <EmptyCart src={CartIcon} />
+          </>
+        ) : (
+          <>
+            <CartHeader>
+              <QuantityDisplay>CART ({totalQuantity})</QuantityDisplay>
+              <RemoveButton onClick={handleRemove}>Remove all</RemoveButton>
+            </CartHeader>
+            <CartProducts>
+              {state.cartItems.map((item) => {
+                return (
+                  <Product>
+                    <ProductImg src={item.image} />
+                    <NameAndPrice>
+                      <ProductName>{item.name}</ProductName>
+                      <Price>$ {item.price}</Price>
+                    </NameAndPrice>
+                    <ProductQuantity>
+                      <Decrease onClick={() => handleDec(item.name)}>
+                        -
+                      </Decrease>
+                      <Quantity>{item.quantity}</Quantity>
+                      <Increase onClick={() => handleInc(item.name)}>
+                        +
+                      </Increase>
+                    </ProductQuantity>
+                  </Product>
+                );
+              })}
+            </CartProducts>
+            <TotalDiv>
+              <TotalText>TOTAL</TotalText>
+              <PriceText>$ {totalPrice}</PriceText>
+            </TotalDiv>
+            <CheckoutButton>CHECKOUT</CheckoutButton>
+          </>
+        )}
       </CartContainer>
     </>
   );
 }
+
+const SlideInCart = keyframes`
+  0% {
+    transform: translateX(-50%);
+    opacity: 0;
+  } 100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+const EmptyTextAnimation = keyframes`
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const EmptyCart = styled.img`
+  width: 9.5rem;
+  filter: brightness(0) invert(0);
+  margin: auto;
+  animation-name: ${SlideInCart};
+  animation-duration: 0.8s;
+`;
+
+const EmptyText = styled.h2`
+  color: #00000099;
+  font-size: 1.7rem;
+  text-align: center;
+  animation-name: ${EmptyTextAnimation};
+  animation-duration: 0.5s;
+`;
 
 const SlideIn = keyframes`
   0% {
@@ -100,7 +153,7 @@ const CartContainer = styled.div`
   flex-direction: column;
   gap: 3.1rem;
   animation-name: ${SlideIn};
-  animation-duration: 0.2s;
+  animation-duration: 0.4s;
 
   @media only screen and (min-width: 48rem) {
     width: 38rem;

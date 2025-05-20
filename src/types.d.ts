@@ -5,6 +5,7 @@ interface IContext {
   displayCart: boolean;
   setDisplayCart: React.Dispatch<React.SetStateAction<boolean>>;
   handleCartClick: () => void;
+  cartIsEmpty: boolean;
 }
 
 interface IInitialState {
@@ -88,8 +89,7 @@ type CartAction =
   | {
       type: "cart-dec";
       payload: { name: string; quantity: number };
-    }
-  | { type: "total-price" };
+    };
 
 interface ICartContext {
   state: IInitialState;

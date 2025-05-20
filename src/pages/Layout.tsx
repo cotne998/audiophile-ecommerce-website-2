@@ -11,6 +11,7 @@ export const MainContext = createContext<IContext>({
   displayCart: false,
   setDisplayCart: () => {},
   handleCartClick: () => {},
+  cartIsEmpty: false,
 });
 
 export const CartContext = createContext<ICartContext>({
@@ -46,6 +47,7 @@ export default function Layout() {
           displayCart,
           setDisplayCart,
           handleCartClick,
+          cartIsEmpty: state.cartItems.length === 0,
         }}>
         <CartContext.Provider value={{ state, dispatch }}>
           <Header />

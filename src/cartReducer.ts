@@ -90,19 +90,6 @@ export const cartReducer = (
       };
     }
 
-    case "total-price": {
-      let sum = 0;
-
-      state.cartItems.map((item) => {
-        sum += item.price * item.quantity;
-      });
-
-      return {
-        ...state,
-        totalPrice: sum,
-      };
-    }
-
     default:
       return state;
   }
